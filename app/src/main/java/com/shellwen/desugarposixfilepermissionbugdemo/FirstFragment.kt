@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.shellwen.desugarposixfilepermissionbugdemo.databinding.FragmentFirstBinding
+import java.nio.file.FileSystems
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.attribute.PosixFilePermission
@@ -20,7 +21,7 @@ data class GetApkPathResult(
 
 fun getApkPath(ctx: Context): GetApkPathResult {
     val apkPath = ctx.packageCodePath
-    val path = Path.of(apkPath)
+    val path = FileSystems.getDefault().getPath(apkPath)
 //    val posixFilePermissions = path.getPosixFilePermissions()
     val posixFilePermissions =
         Files.readAttributes(path, "posix:permissions")["permissions"] as Set<*>
